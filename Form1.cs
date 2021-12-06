@@ -26,7 +26,7 @@ namespace GoFishing
                 MessageBox.Show("Wpisz swoje Imię", "Nie można jeszcze rozpocząć gry");
                 return;
             }
-            game = new Game(textName.Text, new List<string> { "Janek", "Bartek"}, textProgress);
+            game = new Game(textName.Text, new List<string> { "Janek", "Bartek" }, textProgress);
             buttonStart.Enabled = false;
             textName.Enabled = false;
             buttonAsk.Enabled = true;
@@ -35,7 +35,7 @@ namespace GoFishing
         private void UpdateForm()
         {
             listHand.Items.Clear();
-            foreach (String cardName in game.GetPlayerCardName()) 
+            foreach (String cardName in game.GetPlayerCardName())
             {
                 listHand.Items.Add(cardName);
             }
@@ -48,7 +48,7 @@ namespace GoFishing
         private void buttonAsk_Click(object sender, EventArgs e)
         {
             textProgress.Text = "";
-            if (listHand.SelectedIndex<0)
+            if (listHand.SelectedIndex < 0)
             {
                 MessageBox.Show("Wybierz kartę.");
                 return;

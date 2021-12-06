@@ -8,7 +8,7 @@ namespace GoFishing
 {
     public partial class Card
     {
-    public Suits Suit { get; set; }
+        public Suits Suit { get; set; }
         public Values Value { get; set; }
         public string Name
         {
@@ -26,7 +26,5 @@ namespace GoFishing
         {
             return Name;
         }
-
-
     }
 }

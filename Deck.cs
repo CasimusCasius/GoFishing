@@ -50,7 +50,7 @@ namespace GoFishing
         public void Shuffle()
         {
             List<Card> newCards = new List<Card>();
-            while (cards.Count>0)
+            while (cards.Count > 0)
             {
                 int i = random.Next(cards.Count);
                 newCards.Add(cards[i]);
@@ -89,11 +89,11 @@ namespace GoFishing
         }
         public Deck PullOutValues(Values values)
         {
-            Deck deckToReturn = new Deck(new Card[] {});
+            Deck deckToReturn = new Deck(new Card[] { });
             for (int i = cards.Count - 1; i >= 0; i--)
                 if (cards[i].Value == values)
                     deckToReturn.Add(Deal(i));
-            return deckToReturn;            
+            return deckToReturn;
         }
         public bool HasBook(Values values)
         {
@@ -101,12 +101,12 @@ namespace GoFishing
             foreach (var card in cards)
                 if (card.Value == values)
                     NumberOfCards++;
-            if (NumberOfCards == 4) 
+            if (NumberOfCards == 4)
                 return true;
             else
                 return false;
         }
-    
+
     }
-        
+
 }

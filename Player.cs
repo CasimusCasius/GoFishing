@@ -25,7 +25,7 @@ namespace GoFishing
             this.name = name;
             this.random = random;
             this.textBoxOnForm = textBoxOnForm;
-            this.textBoxOnForm.Text += Name + " dołączył do gry. \n";
+            this.textBoxOnForm.Text += Name + " dołączył do gry. \n\r";
         }
         public IEnumerable<Values> PullOutBooks()
         {
@@ -34,13 +34,13 @@ namespace GoFishing
             {
                 Values value = (Values)i;
                 int howMany = 0;
-                for (int card = 0; card < cards.Count; card++)
-                    if (cards.Peek(card).Value == value)
+                for (int card = 0; card < CardCount; card++)
+                    if (Peek(card).Value == value)
                         howMany++;
-                if (howMany==4)
+                if (howMany == 4)
                 {
                     books.Add(value);
-                    for (int card = cards.Count - 1; card >= 0; card--) 
+                    for (int card = CardCount - 1; card >= 0; card--)
                         cards.Deal(card);
                 }
 
@@ -49,39 +49,53 @@ namespace GoFishing
         }
         public Values GetRandomValue()
         {
-            return cards.Peek(random.Next(0, cards.Count)).Value;
+            return Peek(random.Next(0, CardCount)).Value;
         }
         public Deck DoYouHaveAny(Values value)
-        { 
+        {
             Deck serchedValueDeck = new Deck(new Card[] { });
             serchedValueDeck = cards.PullOutValues(value);
             int countCard = serchedValueDeck.Count;
-            textBoxOnForm.Text += Name + " ma " + countCard + Card.Plural(value, countCard);
+            textBoxOnForm.Text += Name + " ma " + countCard + Card.Plural(value, countCard) + Environment.NewLine;
             return serchedValueDeck;
         }
         public void AskForACard(List<Player> players, int myIndex, Deck stock)
         {
             AskForACard(players, myIndex, stock, GetRandomValue());
         }
-        public void AskForACard(List<Player> players,int myIndex, Deck stock, Values values)
+        public void AskForACard(List<Player> players, int myIndex, Deck stock, Values values)
         {
-            textBoxOnForm.Text += Name + " pyta czy ktoś ma " + Card.Plural(values,2);
+            int howMany = 0;
+            textBoxOnForm.Text += Name + " pyta czy ktoś ma " + Card.Plural(values, 2) + Environment.NewLine;
             for (int i = 0; i < players.Count; i++)
             {
-                if(myIndex != i)
+                if (myIndex != i)
                 {
-                    Deck takenCards = new Deck(new Card[]{});
+                    Deck takenCards = new Deck(new Card[] { });
                     takenCards = players[i].DoYouHaveAny(values);
-                    if (takenCards.Count == 0)
+                    textBoxOnForm.Text += players[i].Name + " ma " + takenCards.Count + Card.Plural(values, takenCards.Count) + Environment.NewLine;
+                    if (takenCards.Count != 0)
                     {
-                        players[i].cards.Add(stock.Deal());
-
+                        howMany++;
                     }
                 }
-
+            }
+            if (howMany == 0)
+            {
+                players[myIndex].TakeCard(stock.Deal());
+                textBoxOnForm.Text += players[myIndex].Name + " pobrał kartę z kupki \n\r";
             }
         }
-        
-
+        public int CardCount
+        {
+            get
+            {
+                return cards.Count;
+            }
+        }
+        public void TakeCard(Card card) { cards.Add(card); }
+        public IEnumerable<string> GetCardNames() { return cards.GetCardNames(); }
+        public Card Peek(int cardNumber) { return cards.Peek(cardNumber); }
+        public void SortHand() { cards.SortByValue(); }
     }
 }

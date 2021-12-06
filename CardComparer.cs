@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoFishing
 {
-    internal class CardComparer_bySuit:IComparer<Card>
+    internal class CardComparer_bySuit : IComparer<Card>
     {
         public int Compare(Card x, Card y)
         {
