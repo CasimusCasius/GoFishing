@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace GoFishing
 {
-    internal class Card
+    public partial class Card
     {
-        public Suits Suit { get; set; }
+    public Suits Suit { get; set; }
         public Values Value { get; set; }
         public string Name
         {
             get
             {
-                return Value.ToString() + " of " + Suit.ToString();
+                return names[(int)Value] + " " + suits[(int)Suit];
             }
         }
-
         public Card(Suits suit, Values value)
         {
             Suit = suit;
@@ -27,5 +26,7 @@ namespace GoFishing
         {
             return Name;
         }
+
+
     }
 }
